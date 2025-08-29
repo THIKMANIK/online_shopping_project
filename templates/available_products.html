@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Products - Mixed Media Art Crew</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #333;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+             background: url("{{ url_for('static', filename='images/logo_bg.png') }}") no-repeat center center;
+background-size: cover;
+            box-shadow: 0 0 15px rgba(255, 102, 0, 0.6);
+            border: 3px solid #ff6600;
+        }
+        
+        .logo-text {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #ff6600;
+            margin-left: 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            font-size: 2.8rem;
+            margin: 20px 0;
+            background: linear-gradient(to right, #ff6600, #ff8c00, #ffaa00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .nav-btn {
+            padding: 12px 25px;
+            background: linear-gradient(to right, #ff6600, #ff8c00);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 102, 0, 0.3);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 102, 0, 0.5);
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .product {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 3px solid #ff6600;
+        }
+        
+        .product-details {
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 1.4rem;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            font-size: 1.3rem;
+            color: #ff6600;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .product-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .order-form {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #ff6600;
+            outline: none;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to right, #25D366, #20B85C);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
+        }
+        
+        .submit-btn:hover {
+            background: linear-gradient(to right, #20B85C, #1A9C4D);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 12px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .social-links a {
+            color: #ff6600;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: #ff8c00;
+        }
+        
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .logo-text {
+                font-size: 1.8rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo"></div>
+                <div class="logo-text">MMAC</div>
+            </div>
+            
+            <h1>Available Products</h1>
+            
+            <div class="navigation">
+   <a href="{{ url_for('homepage') }}" class="nav-btn">
+        <i class="fas fa-home"></i> Home
+    </a>
+    <a href="{{ url_for('available_products') }}" class="nav-btn">
+        <i class="fas fa-shopping-bag"></i> Products
+    </a>
+    <a href="{{ url_for('homepage') }}#contact" class="nav-btn">
+        <i class="fas fa-envelope"></i> Contact
+    </a>
+</div>
+
+        </header>
+        
+        <div class="products-grid">
+           
+          
+        
+        <footer>
+            
+            <div class="social-links">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function sendOrder(productName, nameId, phoneId, addressId) {
+            let name = document.getElementById(nameId).value;
+            let phone = document.getElementById(phoneId).value;
+            let address = document.getElementById(addressId).value;
+
+            if (!name || !phone || !address) {
+                alert("Please fill in all fields before ordering.");
+                return;
+            }
+
+            let message = `Order Request:%0AProduct: ${productName}%0AName: ${name}%0APhone: ${phone}%0AAddress: ${address}`;
+            let whatsappURL = `https://wa.me/916009159849?text=${message}`;
+            window.open(whatsappURL, "_blank");
+        }
+    </script>
+</body>
+</html>
